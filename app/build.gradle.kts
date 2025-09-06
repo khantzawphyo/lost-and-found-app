@@ -58,12 +58,15 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.9.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.9.3")
 
-    val room_version = "2.7.2"
-    implementation("androidx.room:room-runtime:$room_version")
-    implementation("androidx.room:room-ktx:${room_version}")
-    ksp("androidx.room:room-compiler:$room_version")
+//    val room_version = "2.7.2"
+//    implementation("androidx.room:room-runtime:$room_version")
+//    implementation("androidx.room:room-ktx:${room_version}")
+//    ksp("androidx.room:room-compiler:$room_version")
 
     implementation(platform("com.google.firebase:firebase-bom:34.2.0"))
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-analytics")
+
+    implementation("com.google.firebase:firebase-firestore")
+
 }

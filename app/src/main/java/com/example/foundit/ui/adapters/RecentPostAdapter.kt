@@ -1,27 +1,34 @@
 package com.example.foundit.ui.adapters
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foundit.R
-import com.example.foundit.data.local.entities.Post
-import com.example.foundit.databinding.ItemRecentBinding
+import com.example.foundit.adapters.PostDiffCallback
+import com.example.foundit.data.model.Post
+import com.example.foundit.databinding.RecentPostBinding
 
 class RecentPostAdapter(
-    private var posts: List<Post>,
     private val onItemClick: (Post) -> Unit
-) : RecyclerView.Adapter<RecentPostAdapter.HomePostViewHolder>() {
+) : ListAdapter<Post, RecentPostAdapter.RecentPostViewHolder>(PostDiffCallback()) {
 
-    inner class HomePostViewHolder(private val binding: ItemRecentBinding) :
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentPostViewHolder {
+        val binding = RecentPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return RecentPostViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: RecentPostViewHolder, position: Int) {
+        val post = getItem(position)
+        holder.bind(post, onItemClick)
+    }
+
+    inner class RecentPostViewHolder(private val binding: RecentPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(post: Post) = binding.apply {
-            if (!post.imageUri.isNullOrEmpty()) {
-                ivItemImage.setImageURI(Uri.parse(post.imageUri))
-            } else {
-                ivItemImage.setImageResource(R.drawable.ic_placeholder) // fallback
-            }
+        fun bind(post: Post, onItemClick: (Post) -> Unit) = binding.apply {
+            // Using a placeholder for now
+            ivItemImage.setImageResource(R.drawable.ic_placeholder)
 
             tvItemTitle.text = post.title
             tvItemLocation.text = post.location
@@ -30,21 +37,5 @@ class RecentPostAdapter(
 
             root.setOnClickListener { onItemClick(post) }
         }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomePostViewHolder {
-        val binding = ItemRecentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return HomePostViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: HomePostViewHolder, position: Int) {
-        holder.bind(posts[position])
-    }
-
-    override fun getItemCount(): Int = posts.size
-
-    fun updatePosts(newPosts: List<Post>) {
-        posts = newPosts
-        notifyDataSetChanged()
     }
 }

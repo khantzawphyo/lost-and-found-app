@@ -6,26 +6,23 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.foundit.data.repository.AuthRepository
 import com.example.foundit.databinding.ActivityLoginBinding
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.Firebase
 import com.google.firebase.FirebaseNetworkException
-import com.google.firebase.auth.auth
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        auth = Firebase.auth
 
         setupListeners()
     }
@@ -50,24 +47,22 @@ class LoginActivity : AppCompatActivity() {
             // Show loading state and disable button
             setLoadingState(true)
 
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    // Hide loading state
+            lifecycleScope.launch {
+                try {
+                    AuthRepository.signIn(email, password)
+                    Toast.makeText(this@LoginActivity, "Logged in successfully", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    finish()
+                } catch (e: Exception) {
+                    handleLoginFailure(e)
+                } finally {
                     setLoadingState(false)
-
-                    if (task.isSuccessful) {
-                        Toast.makeText(this, "Logged in successfully", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
-                    } else {
-                        // Handle failed login
-                        handleLoginFailure(task.exception)
-                    }
                 }
+            }
         }
 
         binding.tvSignupRedirect.setOnClickListener {
-            startActivity(Intent(this, SignupActivity::class.java))
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 

@@ -12,16 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Foundit">
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.activities.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.SignupActivity"
+            android:name=".ui.activities.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.WelcomeActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

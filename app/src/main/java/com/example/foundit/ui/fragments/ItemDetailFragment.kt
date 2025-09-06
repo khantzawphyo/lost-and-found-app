@@ -5,13 +5,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.foundit.R
-import com.example.foundit.data.local.AppDatabase
-import com.example.foundit.data.local.entities.Post
+import com.example.foundit.data.model.Post
+import com.example.foundit.data.repository.PostRepository
 import com.example.foundit.databinding.FragmentItemDetailBinding
 import kotlinx.coroutines.launch
 
@@ -36,33 +36,28 @@ class ItemDetailFragment : Fragment(R.layout.fragment_item_detail) {
         }
     }
 
-    /**
-     * Fetches the post data from the database and binds it to the UI views.
-     * It also sets up click listeners for the phone and email fields.
-     */
     private fun fetchAndBindPostData() {
         val postId = args.postId
-        val db = AppDatabase.getDatabase(requireContext())
-
         lifecycleScope.launch {
-            val post = db.postDao().getPostById(postId)
-            post?.let {
-                bindViews(it)
-                setupClickListeners(it)
+            try {
+                val post = PostRepository.getPostById(postId)
+                if (post != null) {
+                    bindViews(post)
+                    setupClickListeners(post)
+                } else {
+                    Toast.makeText(requireContext(), "Post not found.", Toast.LENGTH_SHORT).show()
+                    findNavController().navigateUp()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Error loading post: ${e.message}", Toast.LENGTH_LONG).show()
+                findNavController().navigateUp()
             }
         }
     }
 
-    /**
-     * Binds the fetched post data to the views in the layout.
-     */
     private fun bindViews(post: Post) {
-        // Handle image loading, with a placeholder if the URI is null or empty
-        if (!post.imageUri.isNullOrEmpty()) {
-            binding.ivItemImage.setImageURI(post.imageUri.toUri())
-        } else {
-            binding.ivItemImage.setImageResource(R.drawable.ic_placeholder)
-        }
+        // Using a placeholder for the image for now
+        binding.ivItemImage.setImageResource(R.drawable.ic_placeholder)
 
         binding.tvItemTitle.text = post.title
         binding.chipStatus.text = if (post.isFound) "Found" else "Lost"
@@ -75,12 +70,7 @@ class ItemDetailFragment : Fragment(R.layout.fragment_item_detail) {
         binding.tvPosterMail.text = post.email.ifEmpty { "N/A" }
     }
 
-    /**
-     * Sets up the click listeners for the phone and email TextViews,
-     * launching the appropriate intents.
-     */
     private fun setupClickListeners(post: Post) {
-        // Phone number click listener
         val phoneNumber = post.phone
         if (phoneNumber.isNotEmpty()) {
             binding.tvPosterPhone.setOnClickListener {
@@ -91,7 +81,6 @@ class ItemDetailFragment : Fragment(R.layout.fragment_item_detail) {
             }
         }
 
-        // Email address click listener
         val emailAddress = post.email
         if (emailAddress.isNotEmpty()) {
             binding.tvPosterMail.setOnClickListener {
@@ -105,9 +94,6 @@ class ItemDetailFragment : Fragment(R.layout.fragment_item_detail) {
         }
     }
 
-    /**
-     * A helper function to safely start an intent and show a toast if it fails.
-     */
     private fun startIntent(intent: Intent, failureMessage: String) {
         if (intent.resolveActivity(requireActivity().packageManager) != null) {
             startActivity(intent)

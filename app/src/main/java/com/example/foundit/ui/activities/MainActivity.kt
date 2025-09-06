@@ -1,10 +1,12 @@
 package com.example.foundit.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.example.foundit.R
+import com.example.foundit.data.repository.AuthRepository // Import AuthRepository
 import com.example.foundit.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -14,9 +16,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        // --- THE NEW LOGIN CHECK LOGIC ---
+        // Check if the user is logged in before setting up any UI
+        if (!AuthRepository.isUserLoggedIn()) {
+            // User is NOT logged in, redirect to the Welcome screen
+            val intent = Intent(this, WelcomeActivity::class.java)
+            startActivity(intent)
+            finish() // Prevent the user from returning to this screen via the back button
+            return // Stop further execution of onCreate
+        }
+        // --- END OF NEW LOGIN CHECK LOGIC ---
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         setupNavigation()
     }

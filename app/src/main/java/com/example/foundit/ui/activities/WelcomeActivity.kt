@@ -15,7 +15,7 @@ class WelcomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnSignup.setOnClickListener {
-            startActivity(Intent(this, SignupActivity::class.java))
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
 
 

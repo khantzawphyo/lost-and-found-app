@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foundit.R
-import com.example.foundit.databinding.FragmentDiscoverBinding
 import com.example.foundit.ui.adapters.PostAdapter
+import com.example.foundit.data.model.Post
+import com.example.foundit.databinding.FragmentDiscoverBinding
 import com.example.foundit.ui.viewmodel.PostViewModel
 
 class DiscoverFragment : Fragment(R.layout.fragment_discover) {
@@ -22,7 +22,7 @@ class DiscoverFragment : Fragment(R.layout.fragment_discover) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentDiscoverBinding.bind(view)
 
-        val adapter = PostAdapter(emptyList()) { post ->
+        val adapter = PostAdapter { post ->
             val action = DiscoverFragmentDirections.actionDiscoverFragmentToItemDetailFragment(post.id)
             findNavController().navigate(action)
         }
@@ -35,17 +35,17 @@ class DiscoverFragment : Fragment(R.layout.fragment_discover) {
             findNavController().navigate(action)
         }
 
-        postViewModel.allPosts.observe(viewLifecycleOwner, Observer { posts ->
-            adapter.updatePosts(posts)
+        postViewModel.allPosts.observe(viewLifecycleOwner) { posts ->
+            adapter.submitList(posts)
             updateUiForResults(posts)
-        })
+        }
 
         binding.toolbar.setNavigationOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
     }
 
-    private fun updateUiForResults(posts: List<com.example.foundit.data.local.entities.Post>) {
+    private fun updateUiForResults(posts: List<Post>) {
         if (posts.isEmpty()) {
             binding.listItemsView.visibility = View.GONE
             binding.emptyStateView.visibility = View.VISIBLE

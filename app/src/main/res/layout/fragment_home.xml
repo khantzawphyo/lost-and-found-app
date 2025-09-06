@@ -176,7 +176,7 @@
                 android:layout_weight="1"
                 tools:itemCount="4"
                 android:visibility="gone"
-                tools:listitem="@layout/item_recent" />
+                tools:listitem="@layout/recent_post" />
 
             <LinearLayout
                 android:id="@+id/empty_state_view"

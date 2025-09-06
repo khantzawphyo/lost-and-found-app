@@ -6,28 +6,24 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.foundit.databinding.ActivitySignupBinding
-import com.google.firebase.Firebase
+import androidx.lifecycle.lifecycleScope
+import com.example.foundit.data.repository.AuthRepository
+import com.example.foundit.databinding.ActivityRegisterBinding
 import com.google.firebase.FirebaseNetworkException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import com.google.firebase.auth.auth
+import kotlinx.coroutines.launch
 
-class SignupActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySignupBinding
-    private lateinit var auth: FirebaseAuth
+    private lateinit var binding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivitySignupBinding.inflate(layoutInflater)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Initialize Firebase Auth
-        auth = Firebase.auth
 
         setupListeners()
     }
@@ -74,21 +70,20 @@ class SignupActivity : AppCompatActivity() {
             setLoadingState(true)
 
             // Create Firebase user
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    // Hide loading state
+            lifecycleScope.launch {
+                try {
+                    AuthRepository.register(email, password)
+                    // User created successfully, navigate to the main activity
+                    Toast.makeText(this@RegisterActivity, "Account created successfully", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@RegisterActivity, MainActivity::class.java))
+                    finish()
+                } catch (e: Exception) {
+                    // Signup failed, handle the specific exception
+                    handleSignupFailure(e)
+                } finally {
                     setLoadingState(false)
-
-                    if (task.isSuccessful) {
-                        // User created successfully, navigate to the main activity
-                        Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
-                    } else {
-                        // Signup failed, handle the specific exception
-                        handleSignupFailure(task.exception)
-                    }
                 }
+            }
         }
 
         binding.tvLoginRedirect.setOnClickListener {

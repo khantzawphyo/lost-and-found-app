@@ -36,7 +36,7 @@
         android:paddingBottom="16dp"
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_post" />
+        tools:listitem="@layout/post" />
 
     <LinearLayout
         android:id="@+id/empty_state_view"

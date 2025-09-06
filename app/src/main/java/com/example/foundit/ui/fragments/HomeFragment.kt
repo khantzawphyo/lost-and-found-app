@@ -7,8 +7,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foundit.R
-import com.example.foundit.databinding.FragmentHomeBinding
 import com.example.foundit.ui.adapters.RecentPostAdapter
+import com.example.foundit.databinding.FragmentHomeBinding
 import com.example.foundit.ui.viewmodel.PostViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -57,7 +57,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun setupRecyclerView() {
-        adapter = RecentPostAdapter(emptyList()) { post ->
+        // Initialize the adapter with the click listener
+        adapter = RecentPostAdapter { post ->
             val action = HomeFragmentDirections.actionHomeFragmentToItemDetailFragment(post.id)
             findNavController().navigate(action)
         }
@@ -70,7 +71,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun observePosts() {
         postViewModel.allPosts.observe(viewLifecycleOwner) { posts ->
             val recentPosts = posts.take(4) // Only latest 4 posts
-            adapter.updatePosts(recentPosts)
+            adapter.submitList(recentPosts)
 
             if(recentPosts.isEmpty()) {
                 binding.rvRecentItems.visibility = View.GONE

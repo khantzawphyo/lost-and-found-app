@@ -1,40 +1,22 @@
 package com.example.foundit.ui.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.foundit.data.local.AppDatabase
-import com.example.foundit.data.local.entities.Post
+import com.example.foundit.data.model.Post
 import com.example.foundit.data.repository.PostRepository
 import kotlinx.coroutines.launch
 
-class PostViewModel(application: Application) : AndroidViewModel(application) {
+class PostViewModel : ViewModel() {
 
-    private val repository: PostRepository
-    val allPosts: LiveData<List<Post>>
 
-    init {
-        val postDao = AppDatabase.getDatabase(application).postDao()
-        repository = PostRepository(postDao)
-        allPosts = repository.allPosts
-    }
+    // Exposes the list of posts as LiveData from the Flow in the repository
+    val allPosts: LiveData<List<Post>> = PostRepository.getAllPosts().asLiveData()
 
-    fun insert(post: Post) {
+    fun savePost(post: Post) {
         viewModelScope.launch {
-            repository.insert(post)
-        }
-    }
-
-    fun delete(post: Post) {
-        viewModelScope.launch {
-            repository.delete(post)
-        }
-    }
-
-    fun update(post: Post) {
-        viewModelScope.launch {
-            repository.update(post)
+            PostRepository.savePost(post)
         }
     }
 }

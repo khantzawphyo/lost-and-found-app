@@ -5,19 +5,24 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.foundit.R
-import com.example.foundit.data.local.AppDatabase
-import com.example.foundit.data.local.entities.Post
+import com.example.foundit.data.model.Post
 import com.example.foundit.databinding.FragmentReportBinding
+import com.example.foundit.ui.viewmodel.PostViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 class ReportFragment : Fragment(R.layout.fragment_report) {
 
     private var _binding: FragmentReportBinding? = null
     private val binding get() = _binding!!
+
+    private val postViewModel: PostViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,7 +49,11 @@ class ReportFragment : Fragment(R.layout.fragment_report) {
             val datePicker = DatePickerDialog(
                 requireContext(),
                 { _, y, m, d ->
-                    binding.etDate.setText("$d/${m + 1}/$y")
+                    val selectedDate = Calendar.getInstance().apply {
+                        set(y, m, d)
+                    }
+                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    binding.etDate.setText(dateFormat.format(selectedDate.time))
                 },
                 year, month, day
             )
@@ -66,12 +75,12 @@ class ReportFragment : Fragment(R.layout.fragment_report) {
             if (name.isEmpty() || description.isEmpty() || location.isEmpty() || contact.isEmpty() || phone.isEmpty()) {
                 Toast.makeText(requireContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show()
             } else {
-                // Create a Post object (imageUri left null for now, add image picker later)
                 val post = Post(
+                    id = "",
                     title = name,
                     description = description,
                     location = location,
-                    date = date.ifEmpty { "Just now" },
+                    date = date.ifEmpty { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().time) },
                     imageUri = null,
                     postedBy = contact,
                     isFound = type == "Found",
@@ -79,17 +88,36 @@ class ReportFragment : Fragment(R.layout.fragment_report) {
                     email = email.ifEmpty { "N/A" }
                 )
 
-                // Save to DB
-                val db = AppDatabase.getDatabase(requireContext())
+                // Use the ViewModel to save the post
+                setLoadingState(true)
                 lifecycleScope.launch {
-                    db.postDao().insertPost(post)
-
-                    // Navigate to home or details
-                    findNavController().navigateUp()
-                    Toast.makeText(requireContext(), "Report submitted!", Toast.LENGTH_SHORT).show()
+                    try {
+                        postViewModel.savePost(post)
+                        Toast.makeText(requireContext(), "Report submitted!", Toast.LENGTH_SHORT).show()
+                        findNavController().navigateUp()
+                    } catch (e: Exception) {
+                        Toast.makeText(requireContext(), "Failed to submit report: ${e.message}", Toast.LENGTH_LONG).show()
+                    } finally {
+                        setLoadingState(false)
+                    }
                 }
             }
         }
+    }
+
+    private fun setLoadingState(isLoading: Boolean) {
+        binding.btnSubmitReport.isEnabled = !isLoading
+        binding.tilItemName.isEnabled = !isLoading
+        binding.tilDescription.isEnabled = !isLoading
+        binding.tilLocation.isEnabled = !isLoading
+        binding.tilDate.isEnabled = !isLoading
+        binding.tilContactName.isEnabled = !isLoading
+        binding.tilPhone.isEnabled = !isLoading
+        binding.tilEmail.isEnabled = !isLoading
+
+        // Show/hide the progress bar and button text
+        binding.pbSubmit.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.btnSubmitReport.text = if (isLoading) "" else "Submit Report"
     }
 
     override fun onDestroyView() {
