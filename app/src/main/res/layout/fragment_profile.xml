@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F4F6"
+    tools:context=".ui.fragments.ProfileFragment">
+
+    <!-- Header Background Image -->
+    <ImageView
+        android:id="@+id/ivProfileHeaderBackground"
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+        android:contentDescription="Profile header background"
+        android:scaleType="centerCrop"
+        android:src="@drawable/header_background" />
+
+    <!-- Semi-transparent gradient overlay -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+        android:background="#A8000000" />
+
+    <!-- Profile Image & Name -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="36dp"
+        android:gravity="center_horizontal"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:cardCornerRadius="60dp"
+            app:cardElevation="12dp"
+            app:strokeColor="@color/white"
+            app:strokeWidth="3dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivProfileImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="User profile picture"
+                android:scaleType="centerCrop"
+                android:src="@drawable/avatar"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tvProfileNameHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="John Doe"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvProfileEmailHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="johndoe@miit.edu.mm"
+            android:fontFamily="@font/sourcesans3_semibold"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Main card layout overlapping header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="300dp"
+        android:background="@drawable/top_rounded_card"
+        android:orientation="vertical"
+
+        android:paddingHorizontal="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Account Details"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="24dp"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Account Details Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:backgroundTint="@color/indigo_50"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="1dp"
+                    app:strokeColor="@color/slate_100"
+                    app:strokeWidth="0.5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <!-- Name -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:contentDescription="User icon"
+                                android:src="@drawable/ic_profile_outline"
+                                app:tint="@color/indigo_600" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Name"
+                                    android:textColor="@color/slate_600"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/tvProfileName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="John Doe"
+                                    android:textColor="@color/slate_900"
+                                    android:textSize="16sp"
+                                    android:fontFamily="@font/sourcesans3_semibold" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/ivEditName"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:contentDescription="Edit"
+                                android:src="@drawable/ic_edit"
+                                app:tint="@color/indigo_700" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5dp"
+                            android:background="@color/slate_300" />
+
+                        <!-- Email -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:contentDescription="Email icon"
+                                android:src="@drawable/ic_email"
+                                app:tint="@color/indigo_600" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Email"
+                                    android:textColor="@color/slate_600"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/tvProfileEmail"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="johndoe@miit.edu.mm"
+                                    android:textColor="@color/slate_900"
+                                    android:textSize="16sp"
+                                    android:fontFamily="@font/sourcesans3_semibold" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/ivEditEmail"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:contentDescription="Edit"
+                                android:src="@drawable/ic_edit"
+                                app:tint="@color/indigo_700" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5dp"
+                            android:background="@color/slate_300" />
+
+                        <!-- Phone -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="16dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:contentDescription="Phone icon"
+                                android:src="@drawable/ic_phone"
+                                app:tint="@color/indigo_600" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Phone Number"
+                                    android:textColor="@color/slate_600"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/tvProfilePhone"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="09797272441"
+                                    android:textColor="@color/slate_900"
+                                    android:textSize="16sp"
+                                    android:fontFamily="@font/sourcesans3_semibold" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/ivEditPhone"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:contentDescription="Edit"
+                                android:src="@drawable/ic_edit"
+                                app:tint="@color/indigo_700" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Logout button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLogout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Log Out"
+                    android:textAllCaps="false"
+                    android:backgroundTint="@color/indigo_700"
+                    android:textColor="@color/white"
+                    app:icon="@drawable/ic_logout"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/white" />
+            </LinearLayout>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

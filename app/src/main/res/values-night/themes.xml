@@ -1,0 +1,10 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Foundit" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/source_sans_3</item>
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    </style>
+
+    <style name="Theme.Foundit" parent="Base.Theme.Foundit" />
+</resources>
