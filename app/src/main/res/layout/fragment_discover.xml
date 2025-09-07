@@ -1,52 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_50"
+    android:background="@color/slate_100"
+    android:orientation="vertical"
+    android:paddingTop="8dp"
     tools:context=".ui.fragments.DiscoverFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingBottom="12dp"
-        android:paddingTop="36dp"
-        app:elevation="0dp">
+        android:layout_marginTop="32dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="8dp">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:navigationIconTint="@color/slate_900"
-            app:title="Discover"
-            app:titleTextColor="@color/slate_900"
-            app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1" />
+        <ImageView
+            android:id="@+id/ivBackArrow"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="Back"
+            android:padding="4dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/slate_900" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <TextView
+            android:id="@+id/tvDiscoverHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/rethinksans_bold"
+            android:text="Discover"
+            android:textColor="@color/slate_900"
+            android:textSize="32sp" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_items_view"
+        android:id="@+id/rvAllPosts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:clipToPadding="false"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        android:visibility="gone"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/post" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_post" />
 
+    <!-- Enhanced empty state view -->
     <LinearLayout
-        android:id="@+id/empty_state_view"
+        android:id="@+id/emptyStateView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="visible"
-        >
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <ImageView
             android:layout_width="240dp"
@@ -75,13 +88,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="Report an Item"
             android:backgroundTint="@color/indigo_100"
-            android:textColor="@color/indigo_800"
-            app:iconTint="@color/indigo_800"
-            app:icon="@drawable/ic_add"
             android:fontFamily="@font/sourcesans3_semibold"
-            app:iconGravity="textStart" />
+            android:text="Report an Item"
+            android:textColor="@color/indigo_800"
+            app:icon="@drawable/ic_add"
+            app:iconGravity="textStart"
+            app:iconTint="@color/indigo_800" />
 
     </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

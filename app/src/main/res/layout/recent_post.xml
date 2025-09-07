@@ -71,14 +71,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvItemTitle">
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:contentDescription="Location icon"
-                android:src="@drawable/ic_location"
-                app:tint="@color/gray_700" />
+            app:layout_constraintTop_toBottomOf="@id/tvItemTitle"
+            app:layout_constraintVertical_bias="0.0">  <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:contentDescription="Location icon"
+            android:src="@drawable/ic_location"
+            app:tint="@color/gray_700" />
 
             <TextView
                 android:id="@+id/tvItemLocation"

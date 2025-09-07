@@ -6,7 +6,12 @@ import com.google.firebase.auth.auth
 import kotlinx.coroutines.tasks.await
 
 object AuthRepository {
-    private val auth: FirebaseAuth = Firebase.auth
+    private val auth: FirebaseAuth by lazy { Firebase.auth }
+
+    // New function to get the current user's ID
+    fun getCurrentUserId(): String? {
+        return auth.currentUser?.uid
+    }
 
     fun isUserLoggedIn(): Boolean {
         return auth.currentUser != null

@@ -35,9 +35,11 @@ class RegisterActivity : AppCompatActivity() {
             binding.textInputLayoutEmail.error = null
             binding.textInputLayoutPassword.error = null
             binding.textInputLayoutConfirmPassword.error = null
+            binding.textInputLayoutPhoneNumber.error = null
 
             val fullName = binding.etName.text.toString().trim()
             val email = binding.etEmail.text.toString().trim()
+            val phoneNumber = binding.etPhoneNumber.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
             val confirmPassword = binding.etConfirmPassword.text.toString().trim()
 
@@ -48,6 +50,10 @@ class RegisterActivity : AppCompatActivity() {
             }
             if (email.isEmpty()) {
                 binding.textInputLayoutEmail.error = "Email is required"
+                return@setOnClickListener
+            }
+            if (phoneNumber.isEmpty()) {
+                binding.textInputLayoutPhoneNumber.error = "Phone number is required"
                 return@setOnClickListener
             }
             if (password.isEmpty()) {
@@ -66,17 +72,22 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Show loading state and disable button
             setLoadingState(true)
 
             // Create Firebase user
             lifecycleScope.launch {
                 try {
                     AuthRepository.register(email, password)
+                    // After successful authentication, save the user's profile to Firestore.
+                    // The next step in our plan will be to add this logic.
+
                     // User created successfully, navigate to the main activity
                     Toast.makeText(this@RegisterActivity, "Account created successfully", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@RegisterActivity, MainActivity::class.java))
+                    val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
                     finish()
+
                 } catch (e: Exception) {
                     // Signup failed, handle the specific exception
                     handleSignupFailure(e)

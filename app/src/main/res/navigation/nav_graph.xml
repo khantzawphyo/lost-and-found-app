@@ -24,9 +24,22 @@
 
     <fragment
         android:id="@+id/reportFragment"
-        android:name="com.example.foundit.ui.fragments.ReportFragment"
+        android:name="com.example.foundit.ui.fragments.CreatePostFragment"
         android:label="Report"
-        tools:layout="@layout/fragment_report">
+        tools:layout="@layout/fragment_create_post">
+
+        <!-- This argument is required to pass the postId for editing -->
+        <argument
+            android:name="postId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
+        <!-- This argument is required to determine if the post is lost or found -->
+        <argument
+            android:name="isFound"
+            app:argType="boolean"
+            android:defaultValue="false" />
 
         <action
             android:id="@+id/action_reportFragment_to_homeFragment"
@@ -52,6 +65,20 @@
         <action
             android:id="@+id/action_discoverFragment_to_itemDetailFragment"
             app:destination="@id/itemDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/myPostsFragment"
+        android:name="com.example.foundit.ui.fragments.MyPostsFragment"
+        android:label="My Posts"
+        tools:layout="@layout/fragment_my_posts" >
+        <action
+            android:id="@+id/action_myPostsFragment_to_reportFragment"
+            app:destination="@id/reportFragment" />
+        <action
+            android:id="@+id/action_myPostsFragment_to_itemDetailFragment"
+            app:destination="@id/itemDetailFragment" />
+
     </fragment>
 
     <fragment

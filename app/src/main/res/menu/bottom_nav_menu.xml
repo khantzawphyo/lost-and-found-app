@@ -11,6 +11,12 @@
         android:title="Discover" />
 
     <item
+        android:id="@+id/menu_my_posts"
+        android:icon="@drawable/ic_my_posts"
+        android:title="My Posts" />
+
+
+    <item
         android:id="@+id/menu_profile"
         android:icon="@drawable/ic_profile"
         android:title="Profile" />

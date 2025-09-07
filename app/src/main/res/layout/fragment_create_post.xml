@@ -1,79 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".ui.fragments.ReportFragment">
+    android:orientation="vertical"
+    android:background="@color/slate_100"
+    android:paddingTop="8dp"
+    tools:context=".ui.fragments.CreatePostFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingBottom="12dp"
-        android:paddingTop="36dp"
-        app:elevation="0dp">
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="8dp">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:navigationIconTint="@color/slate_900"
-            app:title="Report Item"
-            app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1"
-            app:titleTextColor="@color/slate_900" />
+        <ImageView
+            android:id="@+id/ivBackArrow"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="Back"
+            android:padding="4dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/slate_900" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <TextView
+            android:id="@+id/tvCreatePostHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/rethinksans_bold"
+            android:text="Create Post"
+            android:textColor="@color/slate_900"
+            android:textSize="32sp" />
+
+    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
-
-            <!-- Report Type Selection -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:text="Report Type"
-                android:textColor="@color/slate_800"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/toggleGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                app:checkedButton="@+id/btnLost"
-                app:selectionRequired="true"
-                app:singleSelection="true">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnLost"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Lost Item" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnFound"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Found Item" />
-
-            </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <!-- Image Upload Section -->
             <TextView
@@ -205,7 +180,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 app:boxBackgroundMode="outline"
-
                 app:endIconDrawable="@drawable/ic_calendar"
                 app:endIconMode="custom">
 
@@ -284,12 +258,12 @@
                 android:layout_marginBottom="32dp">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnSubmitReport"
+                    android:id="@+id/btnSubmitPost"
                     style="@style/Widget.Material3.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Submit Report"
-                    app:backgroundTint="@color/indigo_500"
+                    android:text="Create Post"
+                    app:backgroundTint="@color/indigo_700"
                     android:textColor="@color/white"
                     app:icon="@drawable/ic_send"
                     app:iconGravity="textStart"
@@ -307,4 +281,4 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

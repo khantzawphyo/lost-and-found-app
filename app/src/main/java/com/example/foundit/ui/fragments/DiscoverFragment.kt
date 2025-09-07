@@ -1,57 +1,80 @@
 package com.example.foundit.ui.fragments
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foundit.R
-import com.example.foundit.ui.adapters.PostAdapter
 import com.example.foundit.data.model.Post
 import com.example.foundit.databinding.FragmentDiscoverBinding
+import com.example.foundit.ui.adapters.PostAdapter
 import com.example.foundit.ui.viewmodel.PostViewModel
+import kotlinx.coroutines.launch
 
-class DiscoverFragment : Fragment(R.layout.fragment_discover) {
+class DiscoverFragment : Fragment() {
 
     private var _binding: FragmentDiscoverBinding? = null
     private val binding get() = _binding!!
+    private lateinit var adapter: PostAdapter
+
     private val postViewModel: PostViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentDiscoverBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentDiscoverBinding.bind(view)
+        setupRecyclerView()
+        observePosts()
 
-        val adapter = PostAdapter { post ->
-            val action = DiscoverFragmentDirections.actionDiscoverFragmentToItemDetailFragment(post.id)
-            findNavController().navigate(action)
+        binding.ivBackArrow.setOnClickListener {
+            findNavController().navigateUp()
         }
+    }
 
-        binding.listItemsView.layoutManager = LinearLayoutManager(requireContext())
-        binding.listItemsView.adapter = adapter
+    private fun setupRecyclerView() {
+        adapter = PostAdapter(
+            onItemClick = { post ->
+                val action =
+                    DiscoverFragmentDirections.actionDiscoverFragmentToItemDetailFragment(post.id)
+                findNavController().navigate(action)
+            },
+            onEditClick = { /* No edit post option in discover */ },
+            onDeleteClick = { /* No delete post option in discover */ },
+            isMyPostsAdapter = false
+        )
+        binding.rvAllPosts.layoutManager = LinearLayoutManager(context)
+        binding.rvAllPosts.adapter = adapter
+    }
 
-        binding.btnReport.setOnClickListener {
-            val action = DiscoverFragmentDirections.actionDiscoverFragmentToReportFragment()
-            findNavController().navigate(action)
-        }
-
-        postViewModel.allPosts.observe(viewLifecycleOwner) { posts ->
-            adapter.submitList(posts)
-            updateUiForResults(posts)
-        }
-
-        binding.toolbar.setNavigationOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+    private fun observePosts() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                postViewModel.allPosts.collect { posts ->
+                    adapter.submitList(posts)
+                    updateUiForResults(posts)
+                }
+            }
         }
     }
 
     private fun updateUiForResults(posts: List<Post>) {
         if (posts.isEmpty()) {
-            binding.listItemsView.visibility = View.GONE
             binding.emptyStateView.visibility = View.VISIBLE
+            binding.rvAllPosts.visibility = View.GONE
         } else {
-            binding.listItemsView.visibility = View.VISIBLE
             binding.emptyStateView.visibility = View.GONE
+            binding.rvAllPosts.visibility = View.VISIBLE
         }
     }
 

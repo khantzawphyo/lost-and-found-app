@@ -8,6 +8,7 @@ import kotlinx.parcelize.Parcelize
 data class Post(
     @DocumentId
     val id: String = "",
+    val userId: String = "",
     val title: String = "",
     val description: String = "",
     val location: String = "",
@@ -17,4 +18,7 @@ data class Post(
     val isFound: Boolean = false,
     val phone: String = "",
     val email: String = ""
-) : Parcelable
+) : Parcelable {
+    // Explicit no-argument constructor required by Firestore
+    constructor() : this("", "", "", "", "", "", "", "", false, "", "")
+}

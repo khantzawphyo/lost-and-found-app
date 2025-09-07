@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // --- THE NEW LOGIN CHECK LOGIC ---
+
         // Check if the user is logged in before setting up any UI
         if (!AuthRepository.isUserLoggedIn()) {
             // User is NOT logged in, redirect to the Welcome screen
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
             finish() // Prevent the user from returning to this screen via the back button
             return // Stop further execution of onCreate
         }
-        // --- END OF NEW LOGIN CHECK LOGIC ---
+
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -48,6 +48,12 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_discover -> {
                 if (navController.currentDestination?.id != R.id.discoverFragment) {
                     navController.navigate(R.id.discoverFragment)
+                }
+                true
+            }
+            R.id.menu_my_posts -> {
+                if(navController.currentDestination?.id != R.id.myPostsFragment) {
+                    navController.navigate(R.id.myPostsFragment)
                 }
                 true
             }

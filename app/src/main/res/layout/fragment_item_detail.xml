@@ -1,35 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/slate_50"
+    android:background="@color/slate_100"
+    android:orientation="vertical"
+    android:paddingTop="8dp"
     tools:context=".ui.fragments.ItemDetailFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingTop="36dp"
-        app:elevation="0dp">
+        android:layout_marginTop="32dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="8dp">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:navigationIconTint="@color/slate_900"
-            app:title="Item Details"
-            app:titleTextColor="@color/slate_900" />
+        <ImageView
+            android:id="@+id/ivBackArrow"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="Back"
+            android:padding="4dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/slate_900" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <TextView
+            android:id="@+id/tvItemDetailsHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/rethinksans_bold"
+            android:text="Item Details"
+            android:textColor="@color/slate_900"
+            android:textSize="32sp" />
 
+    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher_background"
+                    android:src="@drawable/ic_placeholder"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -139,7 +152,7 @@
                     android:lineSpacingExtra="4dp"
                     android:textColor="@color/slate_800"
                     android:textSize="16sp"
-                    tools:text="I found a slate_900 laptop bag with a single handle on the front steps of the Student Union. It has a distinctive red key chain attached to the zipper. I have it with me in my dorm room. Please contact me if it's yours!" />
+                    tools:text="I found a gray laptop bag with a single handle on the front steps of the Student Union. It has a distinctive red key chain attached to the zipper. I have it with me in my dorm room. Please contact me if it's yours!" />
 
                 <!-- Contact Section Header -->
                 <TextView
@@ -154,13 +167,12 @@
                 <!-- Poster Information -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
-                    app:strokeColor="@color/slate_200"
-                    android:backgroundTint="@color/white"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
+                    android:backgroundTint="@color/white"
                     app:cardBackgroundColor="@color/slate_100"
                     app:cardCornerRadius="16dp"
-                    >
+                    app:strokeColor="@color/slate_200">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -225,4 +237,4 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

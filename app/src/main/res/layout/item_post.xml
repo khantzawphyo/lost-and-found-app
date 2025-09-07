@@ -8,24 +8,22 @@
     android:layout_marginHorizontal="16dp"
     android:layout_marginTop="8dp"
     android:layout_marginBottom="8dp"
-    android:background="@color/white"
+    android:backgroundTint="@color/white"
     app:cardCornerRadius="14dp"
     app:cardElevation="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:orientation="vertical">
 
-        <!-- Post Header: Profile Pic, Name, Date -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="14dp">
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivPosterProfile"
@@ -47,42 +45,55 @@
                     android:id="@+id/tv_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBodyLarge"
+                    android:fontFamily="@font/sourcesans3_semibold"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
+                    android:textSize="16sp"
                     tools:text="Khant Zaw Phyo" />
 
                 <TextView
                     android:id="@+id/tv_item_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:fontFamily="@font/sourcesans3_regular"
                     android:textColor="@color/gray_700"
+                    android:textSize="12sp"
                     tools:text="3/09/2025" />
             </LinearLayout>
+
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipItemStatus"
                 style="@style/Widget.Material3.Chip.Assist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/sourcesans3_bold"
+                android:paddingHorizontal="8dp"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                app:chipStrokeColor="@color/indigo_600"
+                android:textSize="12sp"
                 app:chipBackgroundColor="@color/indigo_500"
                 app:chipCornerRadius="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:chipStrokeColor="@color/indigo_600"
                 tools:text="Lost" />
+
+            <ImageView
+                android:id="@+id/ivPostMenu"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:contentDescription="More options"
+                android:padding="4dp"
+                android:src="@drawable/ic_more_vert"
+                android:visibility="gone"
+                app:tint="@color/gray_700"
+                tools:visibility="visible" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
             android:orientation="vertical"
             android:paddingHorizontal="16dp"
             android:paddingVertical="4dp">
@@ -91,9 +102,11 @@
                 android:id="@+id/tv_item_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:ellipsize="end"
+                android:fontFamily="@font/sourcesans3_bold"
+                android:maxLines="1"
                 android:textColor="@color/black"
-                android:textStyle="bold"
+                android:textSize="18sp"
                 tools:text="Lost Notebook" />
 
             <TextView
@@ -101,21 +114,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="@color/gray_700"
-                android:maxLines="3"
                 android:ellipsize="end"
+                android:fontFamily="@font/sourcesans3_regular"
+                android:maxLines="3"
+                android:textColor="@color/gray_700"
+                android:textSize="14sp"
                 tools:text="Blue spiral notebook with a sticker of a cat on the front cover. It contains all my physics notes." />
         </LinearLayout>
 
-        <!-- Post Image -->
         <ImageView
             android:id="@+id/iv_item_image"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:contentDescription="Item picture"
             android:scaleType="centerCrop"
-            tools:src="@tools:sample/backgrounds/scenic" />
-
+            android:visibility="gone"
+            tools:src="@tools:sample/backgrounds/scenic"
+            tools:visibility="visible" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

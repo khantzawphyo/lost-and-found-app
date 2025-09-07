@@ -23,6 +23,8 @@
         app:itemBackground="@android:color/transparent"
         app:itemHorizontalTranslationEnabled="false"
         android:paddingVertical="12dp"
+        app:labelVisibilityMode="labeled"
+        app:itemTextAppearanceActiveBoldEnabled="true"
         app:itemIconTint="@drawable/bottom_nav_icon_colors"
         app:itemRippleColor="@color/indigo_100"
         app:itemTextColor="@drawable/bottom_nav_text_colors"

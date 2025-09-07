@@ -51,7 +51,9 @@ class LoginActivity : AppCompatActivity() {
                 try {
                     AuthRepository.signIn(email, password)
                     Toast.makeText(this@LoginActivity, "Logged in successfully", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
                     finish()
                 } catch (e: Exception) {
                     handleLoginFailure(e)

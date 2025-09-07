@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foundit.R
 import com.example.foundit.ui.adapters.RecentPostAdapter
 import com.example.foundit.databinding.FragmentHomeBinding
 import com.example.foundit.ui.viewmodel.PostViewModel
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -30,8 +34,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         setupRecyclerView()
         observePosts()
 
-        binding.cardReportCta.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToReportFragment()
+        binding.cardReportLost.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToReportFragment(isFound = false)
+            findNavController().navigate(action)
+        }
+
+        binding.cardReportFound.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToReportFragment(isFound = true)
             findNavController().navigate(action)
         }
 
@@ -57,7 +66,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun setupRecyclerView() {
-        // Initialize the adapter with the click listener
         adapter = RecentPostAdapter { post ->
             val action = HomeFragmentDirections.actionHomeFragmentToItemDetailFragment(post.id)
             findNavController().navigate(action)
@@ -69,17 +77,20 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun observePosts() {
-        postViewModel.allPosts.observe(viewLifecycleOwner) { posts ->
-            val recentPosts = posts.take(4) // Only latest 4 posts
-            adapter.submitList(recentPosts)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                postViewModel.allPosts.collect { posts ->
+                    val recentPosts = posts.take(4)
+                    adapter.submitList(recentPosts)
 
-            if(recentPosts.isEmpty()) {
-                binding.rvRecentItems.visibility = View.GONE
-                binding.emptyStateView.visibility = View.VISIBLE
-            }
-            else {
-                binding.rvRecentItems.visibility = View.VISIBLE
-                binding.emptyStateView.visibility = View.GONE
+                    if (recentPosts.isEmpty()) {
+                        binding.rvRecentItems.visibility = View.GONE
+                        binding.emptyStateView.visibility = View.VISIBLE
+                    } else {
+                        binding.rvRecentItems.visibility = View.VISIBLE
+                        binding.emptyStateView.visibility = View.GONE
+                    }
+                }
             }
         }
     }

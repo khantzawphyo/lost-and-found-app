@@ -26,12 +26,12 @@ class ItemDetailFragment : Fragment(R.layout.fragment_item_detail) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentItemDetailBinding.bind(view)
 
-        setupToolbar()
+        setupHeader()
         fetchAndBindPostData()
     }
 
-    private fun setupToolbar() {
-        binding.toolbar.setNavigationOnClickListener {
+    private fun setupHeader() {
+        binding.ivBackArrow.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
     }
@@ -49,7 +49,7 @@ class ItemDetailFragment : Fragment(R.layout.fragment_item_detail) {
                     findNavController().navigateUp()
                 }
             } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Error loading post: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Error loading item_post: ${e.message}", Toast.LENGTH_LONG).show()
                 findNavController().navigateUp()
             }
         }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/white"
     tools:context=".ui.activities.RegisterActivity">
 
     <ScrollView
@@ -15,56 +15,44 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="24dp">
 
-            <androidx.cardview.widget.CardView
+            <ImageView
+                android:id="@+id/imgLogo"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginTop="36dp"
-                android:layout_marginBottom="24dp"
-                android:elevation="8dp"
-                app:cardBackgroundColor="@color/indigo_700"
-                app:cardCornerRadius="20dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:contentDescription="foundit logo"
-                        android:src="@drawable/foundit_logo"
-                        app:tint="@android:color/white" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="32dp"
+                android:contentDescription="Foundit App Logo"
+                android:src="@drawable/foundit_logo"
+                app:tint="@color/indigo_700" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/rethinksans_bold"
-                android:text="Create Account"
+                android:text="Create Your Account"
                 android:textColor="@color/indigo_700"
-                android:textSize="32sp" />
+                android:textSize="28sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="32dp"
                 android:fontFamily="@font/sourcesans3_semibold"
-                android:text="Join our community of finders"
+                android:text="Create an account to get started."
                 android:textColor="@color/gray_600"
                 android:textSize="16sp" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutName"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textInputLayoutName"
                 android:layout_marginBottom="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -93,6 +81,22 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutPhoneNumber"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sourcesans3_regular"
+                    android:hint="Phone Number"
+                    android:inputType="phone" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayoutPassword"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -110,11 +114,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutConfirmPassword"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:id="@+id/textInputLayoutConfirmPassword"
+                android:layout_marginBottom="24dp"
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -128,18 +132,18 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginBottom="16dp">
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSignup"
                     style="@style/Widget.Material3.Button"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="56dp"
                     android:fontFamily="@font/sourcesans3_semibold"
                     android:text="Sign Up"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white"
                     app:backgroundTint="@color/indigo_600"
+                    app:cornerRadius="28dp"
                     app:icon="@drawable/ic_login"
                     app:iconGravity="textStart"
                     app:iconTint="@color/white" />
@@ -149,15 +153,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:indeterminateTint="@android:color/white"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    android:indeterminateTint="@color/white" />
 
             </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -173,7 +178,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/sourcesans3_regular"
-                    android:text="OR"
+                    android:text="or"
                     android:textColor="@color/gray_500"
                     android:textSize="14sp" />
 
@@ -189,7 +194,6 @@
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/sourcesans3_semibold"
                 android:text="Sign up with Google"
                 android:textColor="@color/gray_800"
@@ -204,8 +208,11 @@
                 android:id="@+id/tvLoginRedirect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="32dp"
+                android:layout_marginTop="12dp"
                 android:fontFamily="@font/sourcesans3_semibold"
+                android:padding="8dp"
                 android:text="Already have an account? Login"
                 android:textColor="@color/indigo_600"
                 android:textSize="14sp" />
