@@ -12,13 +12,12 @@ data class Post(
     val title: String = "",
     val description: String = "",
     val location: String = "",
-    val date: String = "",
-    val imageUri: String? = null,
+    val timestamp: Long = 0,
+    val imageUrl: String? = null,
     val postedBy: String = "",
-    val isFound: Boolean = false,
+    val found: Boolean = false,
     val phone: String = "",
     val email: String = ""
 ) : Parcelable {
-    // Explicit no-argument constructor required by Firestore
-    constructor() : this("", "", "", "", "", "", "", "", false, "", "")
+    constructor() : this("", "", "", "", "", 0, "", "", false, "", "")
 }

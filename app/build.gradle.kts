@@ -46,6 +46,7 @@ android {
 
 dependencies {
 
+    implementation("androidx.core:core-splashscreen:1.0.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -58,15 +59,19 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.9.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.9.3")
 
-//    val room_version = "2.7.2"
-//    implementation("androidx.room:room-runtime:$room_version")
-//    implementation("androidx.room:room-ktx:${room_version}")
-//    ksp("androidx.room:room-compiler:$room_version")
-
+    // Firebase dependencies
     implementation(platform("com.google.firebase:firebase-bom:34.2.0"))
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-analytics")
-
     implementation("com.google.firebase:firebase-firestore")
+
+    // Network dependencies
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:5.1.0"))
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+
+    // Coil dependencies for image loading
+    implementation("io.coil-kt.coil3:coil:3.3.0")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
 
 }

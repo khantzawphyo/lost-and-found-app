@@ -4,40 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_100"
     android:orientation="vertical"
-    android:background="@color/slate_100"
-    android:paddingTop="8dp"
     tools:context=".ui.fragments.CreatePostFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/headerContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="8dp">
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/ivBackArrow"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Back"
-            android:padding="4dp"
+            android:padding="8dp"
             android:src="@drawable/ic_arrow_back"
-            app:tint="@color/slate_900" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/slate_800" />
 
         <TextView
             android:id="@+id/tvCreatePostHeader"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:fontFamily="@font/rethinksans_bold"
+            android:layout_marginTop="36dp"
+            android:gravity="center_horizontal"
             android:text="Create Post"
-            android:textColor="@color/slate_900"
-            android:textSize="32sp" />
+            android:textColor="@color/slate_800"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/ivBackArrow"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -50,13 +59,59 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Report Type Selection -->
+            <TextView
+                android:id="@+id/tvReportTypeHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="I have..."
+                android:textColor="@color/slate_800"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleButtonGroupReportType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLost"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@drawable/lost_found_button_background_color"
+                    android:text="Lost an item"
+                    android:textColor="@color/lost_found_button_text_color"
+                    app:icon="@drawable/ic_lost"
+                    app:iconTint="@color/lost_found_button_icon_color"
+                    app:strokeColor="@color/lost_found_button_stroke_color" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFound"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@drawable/lost_found_button_background_color"
+                    android:text="Found an item"
+                    android:textColor="@color/lost_found_button_text_color"
+                    app:icon="@drawable/ic_found"
+                    app:iconTint="@color/lost_found_button_icon_color"
+                    app:strokeColor="@color/lost_found_button_stroke_color" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
             <!-- Image Upload Section -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:text="Item Photo"
-                android:textColor="@color/slate_900"
+                android:textColor="@color/slate_800"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -64,15 +119,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/white"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="0dp">
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/slate_400">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="16dp"
-                    android:gravity="center">
+                    android:padding="16dp">
 
                     <FrameLayout
                         android:layout_width="100dp"
@@ -83,9 +141,9 @@
                             android:id="@+id/ivItemUpload"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
                             android:background="@drawable/bg_image_upload"
                             android:contentDescription="Item image preview"
+                            android:scaleType="centerCrop"
                             android:visibility="visible" />
 
                         <ImageView
@@ -93,10 +151,10 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center"
+                            android:contentDescription="Camera icon"
                             android:src="@drawable/ic_camera"
-                            app:tint="@color/violet_600"
                             android:visibility="visible"
-                            android:contentDescription="Camera icon" />
+                            app:tint="@color/slate_600" />
 
                         <!-- Progress Indicator (for when uploading) -->
                         <ProgressBar
@@ -115,9 +173,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Select Image"
+                        android:textColor="@color/slate_700"
                         app:icon="@drawable/ic_upload"
-                        android:textColor="@color/violet_700"
-                        app:iconTint="@color/violet_700" />
+                        app:iconTint="@color/slate_700" />
 
 
                 </LinearLayout>
@@ -129,6 +187,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeColor="@color/indigo_500"
+                app:hintTextColor="@color/indigo_500"
                 app:boxBackgroundMode="outline">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -136,8 +197,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Item Name"
+                    android:inputType="textCapWords"
                     android:textColor="@color/slate_800"
-                    android:inputType="textCapWords" />
+                    android:textColorHint="@color/slate_700" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -145,6 +207,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeColor="@color/indigo_500"
+                app:hintTextColor="@color/indigo_500"
                 app:boxBackgroundMode="outline">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -153,8 +218,9 @@
                     android:layout_height="100dp"
                     android:gravity="top"
                     android:hint="Description"
+                    android:inputType="textMultiLine"
                     android:textColor="@color/slate_800"
-                    android:inputType="textMultiLine" />
+                    android:textColorHint="@color/slate_700" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -162,6 +228,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeColor="@color/indigo_500"
+                app:hintTextColor="@color/indigo_500"
                 app:boxBackgroundMode="outline">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -169,28 +238,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Location"
+                    android:inputType="textCapWords"
                     android:textColor="@color/slate_800"
-                    android:inputType="textCapWords" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Date Selection -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                app:boxBackgroundMode="outline"
-                app:endIconDrawable="@drawable/ic_calendar"
-                app:endIconMode="custom">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:hint="Date (optional)"
-                    android:textColor="@color/slate_800"
-                    android:inputType="none" />
+                    android:textColorHint="@color/slate_700" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Contact Information -->
@@ -204,26 +254,13 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilContactName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:boxBackgroundMode="outline">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etContactName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Your Name"
-                    android:textColor="@color/slate_800"
-                    android:inputType="textCapWords" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeColor="@color/indigo_500"
+                app:hintTextColor="@color/indigo_500"
                 app:boxBackgroundMode="outline">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -231,8 +268,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Phone Number"
+                    android:inputType="phone"
                     android:textColor="@color/slate_800"
-                    android:inputType="phone" />
+                    android:textColorHint="@color/slate_700" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -240,6 +278,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeColor="@color/indigo_500"
+                app:hintTextColor="@color/indigo_500"
                 app:boxBackgroundMode="outline">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -247,8 +288,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email (Optional)"
+                    android:inputType="textEmailAddress"
                     android:textColor="@color/slate_800"
-                    android:inputType="textEmailAddress" />
+                    android:textColorHint="@color/slate_700" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -263,8 +305,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Create Post"
-                    app:backgroundTint="@color/indigo_700"
                     android:textColor="@color/white"
+                    app:backgroundTint="@color/indigo_600"
                     app:icon="@drawable/ic_send"
                     app:iconGravity="textStart"
                     app:iconTint="@color/white" />

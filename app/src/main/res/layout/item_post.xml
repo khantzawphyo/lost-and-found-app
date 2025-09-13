@@ -5,11 +5,9 @@
     style="@style/Widget.Material3.CardView.Filled"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginVertical="4dp"
     android:backgroundTint="@color/white"
-    app:cardCornerRadius="14dp"
+    app:cardCornerRadius="4dp"
     app:cardElevation="1dp">
 
     <LinearLayout
@@ -22,13 +20,13 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="14dp"
-            android:paddingVertical="8dp">
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivPosterProfile"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:contentDescription="Poster profile picture"
                 android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
@@ -37,7 +35,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="12dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -45,68 +43,99 @@
                     android:id="@+id/tv_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sourcesans3_semibold"
+                    android:layout_marginBottom="4dp"
+                    android:fontFamily="@font/figtree_bold"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     tools:text="Khant Zaw Phyo" />
 
-                <TextView
-                    android:id="@+id/tv_item_date"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sourcesans3_regular"
-                    android:textColor="@color/gray_700"
-                    android:textSize="12sp"
-                    tools:text="3/09/2025" />
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_item_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/figtree_regular"
+                        android:textColor="@color/slate_700"
+                        android:textSize="12sp"
+                        tools:text="3/09/2025" />
+
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="4dp"
+                        android:layout_marginHorizontal="6dp"
+                        android:background="@drawable/circle_dot"
+                        android:backgroundTint="@color/slate_700" />
+
+                    <ImageView
+                        android:id="@+id/iv_location_icon"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_location_outline"
+                        android:contentDescription="Location icon"
+                        app:tint="@color/slate_700" />
+
+                    <TextView
+                        android:id="@+id/tv_item_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:fontFamily="@font/figtree_regular"
+                        android:textColor="@color/slate_700"
+                        android:textSize="12sp"
+                        tools:text="Library" />
+                </LinearLayout>
             </LinearLayout>
 
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipItemStatus"
-                style="@style/Widget.Material3.Chip.Assist"
+            <TextView
+                android:id="@+id/tvItemStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:fontFamily="@font/sourcesans3_bold"
+                android:background="@drawable/bg_lost_status_pill"
+                android:fontFamily="@font/figtree_semibold"
                 android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:textAllCaps="true"
                 android:textColor="@color/white"
-                android:textSize="12sp"
-                app:chipBackgroundColor="@color/indigo_500"
-                app:chipCornerRadius="20dp"
-                app:chipStrokeColor="@color/indigo_600"
-                tools:text="Lost" />
+                android:textSize="10sp"
+                tools:text="Found" />
 
             <ImageView
                 android:id="@+id/ivPostMenu"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="8dp"
-                android:contentDescription="More options"
                 android:padding="4dp"
                 android:src="@drawable/ic_more_vert"
+                android:contentDescription="More options"
                 android:visibility="gone"
-                app:tint="@color/gray_700"
+                app:tint="@color/slate_700"
                 tools:visibility="visible" />
-
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:orientation="vertical"
             android:paddingHorizontal="16dp"
-            android:paddingVertical="4dp">
+            android:paddingVertical="8dp">
 
             <TextView
                 android:id="@+id/tv_item_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:fontFamily="@font/sourcesans3_bold"
                 android:maxLines="1"
+                android:fontFamily="@font/figtree_bold"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 tools:text="Lost Notebook" />
 
             <TextView
@@ -114,10 +143,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/sourcesans3_regular"
-                android:maxLines="3"
-                android:textColor="@color/gray_700"
+                android:fontFamily="@font/figtree_regular"
+                android:textColor="@color/slate_700"
                 android:textSize="14sp"
                 tools:text="Blue spiral notebook with a sticker of a cat on the front cover. It contains all my physics notes." />
         </LinearLayout>
@@ -125,9 +152,9 @@
         <ImageView
             android:id="@+id/iv_item_image"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:contentDescription="Item picture"
+            android:layout_height="240dp"
             android:scaleType="centerCrop"
+            android:contentDescription="Item picture"
             android:visibility="gone"
             tools:src="@tools:sample/backgrounds/scenic"
             tools:visibility="visible" />

@@ -10,13 +10,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foundit.R
+import com.example.foundit.data.repository.AuthRepository
+import com.example.foundit.data.repository.UserRepository
 import com.example.foundit.ui.adapters.RecentPostAdapter
 import com.example.foundit.databinding.FragmentHomeBinding
 import com.example.foundit.ui.viewmodel.PostViewModel
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Locale
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -24,6 +24,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val binding get() = _binding!!
 
     private val postViewModel: PostViewModel by viewModels()
+    private val userRepository: UserRepository = UserRepository
     private lateinit var adapter: RecentPostAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,17 +36,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         observePosts()
 
         binding.cardReportLost.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToReportFragment(isFound = false)
+            val action = HomeFragmentDirections.actionHomeToCreatePost()
             findNavController().navigate(action)
         }
 
         binding.cardReportFound.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToReportFragment(isFound = true)
+            val action = HomeFragmentDirections.actionHomeToCreatePost()
             findNavController().navigate(action)
         }
 
-        binding.tvSeeAll.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToDiscoverFragment()
+        binding.btnSeeAll.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeToDiscover()
             findNavController().navigate(action)
         }
     }
@@ -54,24 +55,27 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val calendar = Calendar.getInstance()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
 
-        val greeting = when (hour) {
-            in 0..11 -> "Good Morning!"
-            in 12..17 -> "Good Afternoon!"
-            else -> "Good Evening!"
-        }
-        binding.tvGreeting.text = greeting
+        lifecycleScope.launch {
+            val userId = AuthRepository.getCurrentUserId()
+            val userName = if (userId != null) {
+                val user = userRepository.getUserById(userId)
+                user?.name ?: "User"
+            } else {
+                "User"
+            }
 
-        val dateFormat = SimpleDateFormat("EEEE, MMM d, yyyy", Locale.getDefault())
-        binding.tvDate.text = "It's ${dateFormat.format(calendar.time)}"
+            binding.tvUserName.text = userName
+        }
     }
 
     private fun setupRecyclerView() {
         adapter = RecentPostAdapter { post ->
-            val action = HomeFragmentDirections.actionHomeFragmentToItemDetailFragment(post.id)
+            val action = HomeFragmentDirections.actionHomeToItemDetail(post.id)
             findNavController().navigate(action)
         }
         binding.rvRecentItems.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = this@HomeFragment.adapter
         }
     }

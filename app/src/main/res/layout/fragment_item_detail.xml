@@ -4,40 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/slate_100"
+    android:background="@color/slate_50"
     android:orientation="vertical"
-    android:paddingTop="8dp"
     tools:context=".ui.fragments.ItemDetailFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/headerContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="8dp">
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/ivBackArrow"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Back"
-            android:padding="4dp"
+            android:padding="8dp"
             android:src="@drawable/ic_arrow_back"
-            app:tint="@color/slate_900" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/slate_800" />
 
         <TextView
-            android:id="@+id/tvItemDetailsHeader"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvItemDetailHeader"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:fontFamily="@font/rethinksans_bold"
-            android:text="Item Details"
-            android:textColor="@color/slate_900"
-            android:textSize="32sp" />
+            android:layout_marginTop="36dp"
+            android:gravity="center_horizontal"
+            android:text="Post Details"
+            android:textColor="@color/slate_800"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/ivBackArrow"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -49,130 +59,135 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivItemImage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="300dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginVertical="14dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_placeholder"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
+                tools:src="@tools:sample/backgrounds/scenic" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ivItemImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_placeholder"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <!-- Status Chip (Lost/Found) -->
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="Found"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    app:chipBackgroundColor="@color/indigo_500"
-                    app:chipCornerRadius="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- Details Section -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:paddingHorizontal="24dp"
+                android:paddingBottom="16dp">
 
-                <!-- Title -->
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|start"
+                    android:layout_marginEnd="16dp"
+                    android:text="Found"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:chipBackgroundColor="@color/indigo_600"
+                    app:chipCornerRadius="20dp" />
+
                 <TextView
                     android:id="@+id/tvItemTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/slate_900"
-                    android:textSize="24sp"
+                    android:textColor="@color/slate_800"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     tools:text="Laptop Bag" />
 
-                <!-- Sub-details: Date & Location -->
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="12dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="Date"
+                        android:src="@drawable/ic_calendar"
+                        app:tint="@color/slate_600" />
 
                     <TextView
                         android:id="@+id/tvItemDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="4dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/gray_600"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/slate_700"
                         android:textSize="14sp"
-                        app:drawableStartCompat="@drawable/ic_clock"
-                        app:drawableTint="@color/gray_600"
-                        tools:text="Found 2 hours ago" />
+                        tools:text="Sept 10, 2025" />
+
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="16dp"
+                        android:layout_marginHorizontal="12dp"
+                        android:background="@color/slate_300" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="Location"
+                        android:src="@drawable/ic_location_outline"
+                        app:tint="@color/slate_600" />
 
                     <TextView
                         android:id="@+id/tvItemLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:drawablePadding="4dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/gray_600"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/slate_700"
                         android:textSize="14sp"
-                        app:drawableStartCompat="@drawable/ic_location"
-                        app:drawableTint="@color/gray_600"
                         tools:text="Library" />
-
                 </LinearLayout>
 
-                <!-- Description Header -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Item Description"
-                    android:textColor="@color/slate_900"
-                    android:textSize="18sp"
+                    android:layout_marginTop="24dp"
+                    android:text="Description"
+                    android:textColor="@color/slate_800"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <!-- Description Text -->
                 <TextView
                     android:id="@+id/tvItemDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:fontFamily="@font/figtree_medium"
                     android:lineSpacingExtra="4dp"
-                    android:textColor="@color/slate_800"
-                    android:textSize="16sp"
-                    tools:text="I found a gray laptop bag with a single handle on the front steps of the Student Union. It has a distinctive red key chain attached to the zipper. I have it with me in my dorm room. Please contact me if it's yours!" />
+                    android:textColor="@color/slate_700"
+                    android:textSize="14sp"
+                    tools:text="I found a slate laptop bag with a single handle on the front steps of the Student Union. It has a distinctive red key chain attached to the zipper. I have it with me in my dorm room. Please contact me if it's yours!" />
 
-                <!-- Contact Section Header -->
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
                     android:text="Contact"
-                    android:textColor="@color/slate_900"
-                    android:textSize="18sp"
+                    android:textColor="@color/slate_800"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <!-- Poster Information -->
+
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:backgroundTint="@color/white"
-                    app:cardBackgroundColor="@color/slate_100"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="16dp"
-                    app:strokeColor="@color/slate_200">
+                    app:cardElevation="1dp"
+                    app:strokeColor="@color/slate_200"
+                    app:strokeWidth="1dp">
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -181,14 +196,16 @@
                         android:orientation="horizontal"
                         android:padding="16dp">
 
+
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/ivPosterProfile"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="58dp"
+                            android:layout_height="64dp"
                             android:contentDescription="Poster profile picture"
                             android:scaleType="centerCrop"
-                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Small"
                             tools:src="@tools:sample/avatars" />
+
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -201,7 +218,7 @@
                                 android:id="@+id/tvPosterName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/slate_900"
+                                android:textColor="@color/slate_800"
                                 android:textSize="16sp"
                                 android:textStyle="bold"
                                 tools:text="Khant Zaw Phyo" />
@@ -210,30 +227,50 @@
                                 android:id="@+id/tvPosterPhone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:drawableStart="@drawable/ic_phone"
+                                android:layout_marginTop="4dp"
+                                android:clickable="true"
                                 android:drawablePadding="4dp"
-                                android:drawableTint="@color/gray_600"
-                                android:textColor="@color/gray_600"
+                                android:focusable="true"
+                                android:fontFamily="@font/figtree_semibold"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/slate_700"
                                 android:textSize="14sp"
+                                app:drawableStartCompat="@drawable/ic_phone_outline"
+                                app:drawableTint="@color/slate_600"
                                 tools:text="09797272441" />
 
                             <TextView
                                 android:id="@+id/tvPosterMail"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:drawableStart="@drawable/ic_email"
+                                android:layout_marginTop="4dp"
+                                android:clickable="true"
                                 android:drawablePadding="4dp"
-                                android:drawableTint="@color/gray_600"
+                                android:focusable="true"
+                                android:fontFamily="@font/figtree_semibold"
                                 android:gravity="center_vertical"
-                                android:textColor="@color/gray_600"
+                                android:textColor="@color/slate_700"
                                 android:textSize="14sp"
-                                tools:text="2019-miit-cse-018@miit.edu.mm" />
+                                app:drawableStartCompat="@drawable/ic_email_outline"
+                                app:drawableTint="@color/slate_600"
+                                tools:text="khantzawphyo@gmail.com" />
+
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:paddingVertical="12dp"
+                    android:text="Make a call"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/indigo_600"
+                    app:icon="@drawable/ic_phone"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/white" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

@@ -40,18 +40,19 @@ class DiscoverFragment : Fragment() {
         binding.ivBackArrow.setOnClickListener {
             findNavController().navigateUp()
         }
+
+        binding.btnCreatePost.setOnClickListener {
+            val action = DiscoverFragmentDirections.actionDiscoverToCreatePost()
+            findNavController().navigate(action)
+        }
     }
 
     private fun setupRecyclerView() {
         adapter = PostAdapter(
             onItemClick = { post ->
-                val action =
-                    DiscoverFragmentDirections.actionDiscoverFragmentToItemDetailFragment(post.id)
-                findNavController().navigate(action)
-            },
-            onEditClick = { /* No edit post option in discover */ },
-            onDeleteClick = { /* No delete post option in discover */ },
-            isMyPostsAdapter = false
+            val action = DiscoverFragmentDirections.actionDiscoverToItemDetail(post.id)
+            findNavController().navigate(action)
+        }, onEditClick = { }, onDeleteClick = { }, isMyPostsAdapter = false
         )
         binding.rvAllPosts.layoutManager = LinearLayoutManager(context)
         binding.rvAllPosts.adapter = adapter

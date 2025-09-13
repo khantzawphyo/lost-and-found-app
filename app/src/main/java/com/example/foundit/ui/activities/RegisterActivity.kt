@@ -7,7 +7,9 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.foundit.data.model.User
 import com.example.foundit.data.repository.AuthRepository
+import com.example.foundit.data.repository.UserRepository
 import com.example.foundit.databinding.ActivityRegisterBinding
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -30,7 +32,6 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.btnSignup.setOnClickListener {
-            // Clear previous errors
             binding.textInputLayoutName.error = null
             binding.textInputLayoutEmail.error = null
             binding.textInputLayoutPassword.error = null
@@ -39,11 +40,10 @@ class RegisterActivity : AppCompatActivity() {
 
             val fullName = binding.etName.text.toString().trim()
             val email = binding.etEmail.text.toString().trim()
-            val phoneNumber = binding.etPhoneNumber.text.toString().trim()
+            val phone = binding.etPhoneNumber.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
             val confirmPassword = binding.etConfirmPassword.text.toString().trim()
 
-            // Input validation
             if (fullName.isEmpty()) {
                 binding.textInputLayoutName.error = "Name is required"
                 return@setOnClickListener
@@ -52,7 +52,7 @@ class RegisterActivity : AppCompatActivity() {
                 binding.textInputLayoutEmail.error = "Email is required"
                 return@setOnClickListener
             }
-            if (phoneNumber.isEmpty()) {
+            if (phone.isEmpty()) {
                 binding.textInputLayoutPhoneNumber.error = "Phone number is required"
                 return@setOnClickListener
             }
@@ -74,14 +74,21 @@ class RegisterActivity : AppCompatActivity() {
 
             setLoadingState(true)
 
-            // Create Firebase user
             lifecycleScope.launch {
                 try {
-                    AuthRepository.register(email, password)
-                    // After successful authentication, save the user's profile to Firestore.
-                    // The next step in our plan will be to add this logic.
+                    val authResult = AuthRepository.register(email, password)
+                    val userId = authResult.user?.uid
 
-                    // User created successfully, navigate to the main activity
+                    if (userId != null) {
+                        val newUser = User(
+                            id = userId,
+                            name = fullName,
+                            email = email,
+                            phone = phone
+                        )
+                        UserRepository.saveUser(newUser)
+                    }
+
                     Toast.makeText(this@RegisterActivity, "Account created successfully", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@RegisterActivity, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -89,7 +96,6 @@ class RegisterActivity : AppCompatActivity() {
                     finish()
 
                 } catch (e: Exception) {
-                    // Signup failed, handle the specific exception
                     handleSignupFailure(e)
                 } finally {
                     setLoadingState(false)
@@ -97,7 +103,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-        binding.tvLoginRedirect.setOnClickListener {
+        binding.loginRedirect.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
     }

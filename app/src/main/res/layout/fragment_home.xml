@@ -41,52 +41,79 @@
                 android:paddingHorizontal="24dp"
                 android:paddingBottom="16dp">
 
-                <TextView
-                    android:id="@+id/tvDate"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sourcesans3_semibold"
-                    android:text="It's Monday, Sept 1, 2025"
-                    android:textColor="@color/slate_700"
-                    android:textSize="16sp" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tvGreeting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Good Evening!"
-                    android:textColor="@color/slate_900"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvGreeting"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/figtree_semibold"
+                            android:text="Welcome Back!"
+                            android:textColor="@color/slate_700"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/tvUserName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="-0.04"
+                            android:text="Khant Zaw Phyo"
+                            android:textColor="@color/slate_800"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- demo image for now -->
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivProfileImage"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:contentDescription="User profile picture"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/user"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
                 android:layout_marginBottom="16dp"
+                android:baselineAligned="false"
                 android:gravity="center"
-                android:baselineAligned="false">
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardReportLost"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/red_100"
                     android:clickable="true"
                     android:focusable="true"
-                    app:strokeColor="#00000000"
-                    app:cardCornerRadius="16dp">
+                    app:cardCornerRadius="16dp"
+                    app:strokeColor="#00000000">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="20dp"
-                        android:gravity="center">
+                        android:padding="20dp">
 
                         <ImageView
                             android:layout_width="46dp"
@@ -98,12 +125,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
                             android:text="Report Lost"
                             android:textAlignment="center"
                             android:textColor="@color/red_800"
                             android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:layout_marginTop="8dp"/>
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -112,20 +139,20 @@
                     android:id="@+id/cardReportFound"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginStart="8dp"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/indigo_100"
                     android:clickable="true"
                     android:focusable="true"
-                    app:strokeColor="#00000000"
-                    app:cardCornerRadius="16dp">
+                    app:cardCornerRadius="16dp"
+                    app:strokeColor="#00000000">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="20dp"
-                        android:gravity="center">
+                        android:padding="20dp">
 
                         <ImageView
                             android:layout_width="46dp"
@@ -137,12 +164,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
                             android:text="Report Found"
                             android:textAlignment="center"
                             android:textColor="@color/indigo_800"
                             android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:layout_marginTop="8dp"/>
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -172,32 +199,39 @@
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tvSeeAll"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSeeAll"
+                        style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/ic_chevron_right"
-                        android:drawableTint="@color/indigo_700"
-                        android:fontFamily="@font/sourcesans3_medium"
-                        android:gravity="center"
-                        android:text="See all"
-                        android:textColor="@color/indigo_700"
-                        android:textSize="18sp" />
+                        android:fontFamily="@font/figtree_semibold"
+                        android:minHeight="0dp"
+                        android:text="See All"
+                        android:textColor="@color/indigo_600"
+                        app:icon="@drawable/ic_arrow_forward"
+                        app:iconGravity="end"
+                        app:iconPadding="2dp"
+                        app:iconSize="18dp"
+                        app:iconTint="@color/indigo_600"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </LinearLayout>
             </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvRecentItems"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:paddingHorizontal="8dp"
-                    tools:itemCount="4"
-                    android:visibility="gone"
+                    android:paddingHorizontal="20dp"
+                    android:visibility="visible"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="4"
                     tools:listitem="@layout/recent_post" />
 
                 <LinearLayout
@@ -210,14 +244,13 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="32dp"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:contentDescription="No items found"
-                        android:src="@drawable/empty_data"
-                        />
+                        android:src="@drawable/empty_data" />
 
                     <TextView
                         android:layout_width="wrap_content"

@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_home"
-        android:icon="@drawable/ic_home"
+        android:id="@+id/home"
+        android:icon="@drawable/ic_nav_home_selector"
         android:title="Home" />
 
     <item
-        android:id="@+id/menu_discover"
-        android:icon="@drawable/ic_discover"
+        android:id="@+id/discover"
+        android:icon="@drawable/ic_nav_discover_selector"
         android:title="Discover" />
 
     <item
-        android:id="@+id/menu_my_posts"
-        android:icon="@drawable/ic_my_posts"
-        android:title="My Posts" />
+        android:id="@+id/createPost"
+        android:icon="@drawable/ic_nav_post_selector"
+        android:title="Post" />
+
+    <item
+        android:id="@+id/myPosts"
+        android:icon="@drawable/ic_nav_my_posts_selector"
+        android:title="My posts" />
 
 
     <item
-        android:id="@+id/menu_profile"
-        android:icon="@drawable/ic_profile"
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_nav_profile_selector"
         android:title="Profile" />
 </menu>

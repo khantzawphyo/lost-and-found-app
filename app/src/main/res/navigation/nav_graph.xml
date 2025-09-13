@@ -3,92 +3,80 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/home">
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/home"
         android:name="com.example.foundit.ui.fragments.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_discoverFragment"
-            app:destination="@id/discoverFragment" />
+            android:id="@+id/action_home_to_discover"
+            app:destination="@id/discover" />
         <action
-            android:id="@+id/action_homeFragment_to_itemDetailFragment"
-            app:destination="@id/itemDetailFragment" />
+            android:id="@+id/action_home_to_itemDetail"
+            app:destination="@id/itemDetail" />
         <action
-            android:id="@+id/action_homeFragment_to_reportFragment"
-            app:destination="@id/reportFragment" />
+            android:id="@+id/action_home_to_createPost"
+            app:destination="@id/createPost" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/reportFragment"
+        android:id="@+id/createPost"
         android:name="com.example.foundit.ui.fragments.CreatePostFragment"
         android:label="Report"
         tools:layout="@layout/fragment_create_post">
 
-        <!-- This argument is required to pass the postId for editing -->
         <argument
             android:name="postId"
             app:argType="string"
             app:nullable="true"
             android:defaultValue="@null" />
 
-        <!-- This argument is required to determine if the post is lost or found -->
-        <argument
-            android:name="isFound"
-            app:argType="boolean"
-            android:defaultValue="false" />
-
         <action
-            android:id="@+id/action_reportFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_reportFragment_to_itemDetailFragment"
-            app:destination="@id/itemDetailFragment" />
+            android:id="@+id/action_createPost_to_itemDetail"
+            app:destination="@id/itemDetail" />
     </fragment>
 
 
     <fragment
-        android:id="@+id/discoverFragment"
+        android:id="@+id/discover"
         android:name="com.example.foundit.ui.fragments.DiscoverFragment"
         android:label="Discover"
         tools:layout="@layout/fragment_discover">
 
         <action
-            android:id="@+id/action_discoverFragment_to_reportFragment"
-            app:destination="@id/reportFragment" />
+            android:id="@+id/action_discover_to_createPost"
+            app:destination="@id/createPost" />
 
         <action
-            android:id="@+id/action_discoverFragment_to_itemDetailFragment"
-            app:destination="@id/itemDetailFragment" />
+            android:id="@+id/action_discover_to_itemDetail"
+            app:destination="@id/itemDetail" />
     </fragment>
 
     <fragment
-        android:id="@+id/myPostsFragment"
+        android:id="@+id/myPosts"
         android:name="com.example.foundit.ui.fragments.MyPostsFragment"
         android:label="My Posts"
         tools:layout="@layout/fragment_my_posts" >
         <action
-            android:id="@+id/action_myPostsFragment_to_reportFragment"
-            app:destination="@id/reportFragment" />
+            android:id="@+id/action_myPosts_to_createPost"
+            app:destination="@id/createPost" />
         <action
-            android:id="@+id/action_myPostsFragment_to_itemDetailFragment"
-            app:destination="@id/itemDetailFragment" />
+            android:id="@+id/action_myPosts_to_itemDetail"
+            app:destination="@id/itemDetail" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/profileFragment"
+        android:id="@+id/profile"
         android:name="com.example.foundit.ui.fragments.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/itemDetailFragment"
+        android:id="@+id/itemDetail"
         android:name="com.example.foundit.ui.fragments.ItemDetailFragment"
         android:label="Item Details"
         tools:layout="@layout/fragment_item_detail">

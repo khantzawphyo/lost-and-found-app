@@ -2,26 +2,25 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="280dp"
+    android:layout_width="220dp"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="8dp"
-    android:background="@color/white"
-    android:backgroundTint="@color/white"
-    app:strokeColor="#00000000"
-    app:cardElevation="1dp"
+    android:layout_marginEnd="10dp"
     android:clickable="true"
     android:focusable="true"
-    app:cardCornerRadius="10dp">
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivItemImage"
             android:layout_width="0dp"
-            android:layout_height="160dp"
+            android:layout_height="140dp"
             android:contentDescription="Image of the lost or found item"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
@@ -29,86 +28,94 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/backgrounds/scenic" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipItemStatus"
-            style="@style/Widget.Material3.Chip.Assist"
+        <TextView
+            android:id="@+id/tvItemStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_found_status_pill"
+            android:fontFamily="@font/figtree_semibold"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:text="FOUND"
+            android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            app:chipStrokeColor="@color/indigo_600"
-            app:chipBackgroundColor="@color/indigo_500"
-            app:chipCornerRadius="20dp"
+            android:textSize="10sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Lost" />
+            app:layout_constraintTop_toTopOf="@+id/ivItemImage" />
 
-        <TextView
-            android:id="@+id/tvItemTitle"
+        <!-- Fixed height title container for proper handling of Burmese text -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/titleContainer"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="12dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:layout_height="34dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivItemImage"
-            tools:text="Black Wallet" />
+            app:layout_constraintTop_toBottomOf="@id/ivItemImage">
 
-        <LinearLayout
+            <TextView
+                android:id="@+id/tvItemTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/figtree_bold"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:textColor="@color/slate_900"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Item Name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Fixed height location container for consistent spacing -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llLocation"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvItemTitle"
-            app:layout_constraintVertical_bias="0.0">  <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:contentDescription="Location icon"
-            android:src="@drawable/ic_location"
-            app:tint="@color/gray_700" />
+            app:layout_constraintTop_toBottomOf="@id/titleContainer"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/iconLocation"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:contentDescription="Location icon"
+                android:src="@drawable/ic_location"
+                app:layout_constraintBottom_toBottomOf="@id/tvItemLocation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvItemLocation"
+                app:tint="@color/slate_600" />
 
             <TextView
                 android:id="@+id/tvItemLocation"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:ellipsize="end"
+                android:fontFamily="@font/figtree_medium"
                 android:maxLines="1"
-                android:textColor="@color/gray_700"
-                android:textSize="12sp"
-                tools:text="Near Library" />
+                android:textColor="@color/slate_700"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iconLocation"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Library, 3rd Floor" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginStart="16dp"
-                android:contentDescription="Date icon"
-                android:src="@drawable/ic_clock"
-                app:tint="@color/gray_700" />
-
-            <TextView
-                android:id="@+id/tvItemDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="@color/gray_700"
-                android:textSize="12sp"
-                tools:text="2 hours ago" />
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </com.google.android.material.card.MaterialCardView>

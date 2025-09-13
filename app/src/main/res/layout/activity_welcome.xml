@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,95 +8,101 @@
     android:background="@color/white"
     tools:context=".ui.activities.WelcomeActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+    <ImageView
+        android:id="@+id/imgHero"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="Hero Image"
+        android:scaleType="centerInside"
+        android:src="@drawable/hero_image"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_actions"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_max="360dp"
+        tools:ignore="HardcodedText" />
 
-        <ImageView
-            android:id="@+id/imgLogo"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:contentDescription="Foundit App Logo"
-            android:src="@drawable/foundit_logo"
-            app:tint="@color/indigo_700" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="579dp" />
+
+    <!-- Actions container -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="68dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/tvAppTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/rethinksans_bold"
-            android:text="foundit"
-            android:textColor="@color/indigo_700"
-            android:textSize="40sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
-
-        <ImageView
-            android:id="@+id/imgHero"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:contentDescription="Hero Image"
-            android:scaleType="centerInside"
-            android:src="@drawable/hero_image" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingTop="24dp"
-        android:paddingEnd="24dp"
-        android:paddingStart="24dp"
-        android:paddingBottom="48dp">
+            android:text="Foundit"
+            android:fontFamily="@font/fugaz_one_regular"
+            android:textColor="@color/indigo_600"
+            android:textSize="46sp"
+            android:letterSpacing="-0.05"
+            android:layout_marginBottom="8dp" />
 
         <TextView
             android:id="@+id/tvAppSubTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
             android:gravity="center"
             android:text="Join a community built on trust, where helping others is just as rewarding."
-            android:textColor="@color/gray_700"
-            android:textSize="18sp"
-            app:fontFamily="@font/sourcesans3_semibold" />
+            android:textColor="@color/slate_700"
+            android:textSize="16sp"
+            android:layout_marginBottom="24dp"
+            app:fontFamily="@font/figtree_semibold" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSignup"
             style="@style/Widget.Material3.Button"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/sourcesans3_semibold"
+            android:fontFamily="@font/figtree_semibold"
             android:text="Get Started"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="16sp"
             app:backgroundTint="@color/indigo_600"
             app:cornerRadius="28dp"
             app:icon="@drawable/ic_arrow_forward"
             app:iconGravity="textEnd"
             app:iconTint="@color/white" />
 
-        <TextView
+        <LinearLayout
             android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/sourcesans3_semibold"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
-            android:text="Already have an account? Log in"
-            android:textColor="@color/indigo_700"
-            android:textSize="16sp" />
+            android:orientation="horizontal"
+            android:paddingTop="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/figtree_semibold"
+                android:text="Already have an account? "
+                android:textColor="@color/slate_600"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/figtree_semibold"
+                android:text="Log in"
+                android:textColor="@color/indigo_600"
+                android:textSize="14sp" />
+        </LinearLayout>
     </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

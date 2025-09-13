@@ -2,6 +2,7 @@ package com.example.foundit.data.repository
 
 import com.example.foundit.data.model.Post
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -14,25 +15,28 @@ object PostRepository {
     private val postsCollection by lazy { db.collection("posts") }
 
     fun getAllPosts(): Flow<List<Post>> = callbackFlow {
-        val listenerRegistration = postsCollection.addSnapshotListener { snapshot, e ->
-            if (e != null) {
-                close(e)
-                return@addSnapshotListener
-            }
+        val listenerRegistration = postsCollection
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    close(e)
+                    return@addSnapshotListener
+                }
 
-            if (snapshot != null && !snapshot.isEmpty) {
-                val posts = snapshot.toObjects(Post::class.java)
-                trySend(posts)
-            } else {
-                trySend(emptyList())
+                if (snapshot != null && !snapshot.isEmpty) {
+                    val posts = snapshot.toObjects(Post::class.java)
+                    trySend(posts)
+                } else {
+                    trySend(emptyList())
+                }
             }
-        }
         awaitClose { listenerRegistration.remove() }
     }
 
     fun getPostsByUserId(userId: String): Flow<List<Post>> = callbackFlow {
         val listenerRegistration = postsCollection
             .whereEqualTo("userId", userId)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, e ->
                 if (e != null) {
                     close(e)
@@ -55,12 +59,7 @@ object PostRepository {
     }
 
     suspend fun savePost(post: Post) {
-        // Add a new document to the collection
-        val newDocumentRef = postsCollection.add(post).await()
-        // Get the new ID from the document reference
-        val newId = newDocumentRef.id
-        // Update the document to include the ID
-        postsCollection.document(newId).update("id", newId).await()
+        postsCollection.document(post.id).set(post).await()
     }
 
     suspend fun updatePost(post: Post) {

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -13,6 +14,11 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background= "@color/slate_300"/>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
@@ -20,13 +26,15 @@
         android:layout_gravity="bottom"
         android:background="@color/white"
         android:theme="@style/Theme.MaterialComponents.Light"
+        android:paddingVertical="14dp"
+        app:itemPaddingTop="2dp"
+        android:elevation="16dp"
         app:itemBackground="@android:color/transparent"
-        app:itemHorizontalTranslationEnabled="false"
-        android:paddingVertical="12dp"
-        app:labelVisibilityMode="labeled"
-        app:itemTextAppearanceActiveBoldEnabled="true"
+        app:itemIconSize="28dp"
         app:itemIconTint="@drawable/bottom_nav_icon_colors"
-        app:itemRippleColor="@color/indigo_100"
+        app:itemRippleColor="@android:color/transparent"
         app:itemTextColor="@drawable/bottom_nav_text_colors"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_nav_menu" />
+
 </LinearLayout>

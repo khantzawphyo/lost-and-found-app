@@ -11,12 +11,13 @@ import com.example.foundit.adapters.PostDiffCallback
 import com.example.foundit.data.model.Post
 import com.example.foundit.data.repository.AuthRepository
 import com.example.foundit.databinding.ItemPostBinding
+import com.example.foundit.utils.ImageLoader
+import com.example.foundit.utils.formatTimestamp
 
 class PostAdapter(
     private val onItemClick: (Post) -> Unit,
     private val onEditClick: (Post) -> Unit,
     private val onDeleteClick: (Post) -> Unit,
-    // if the user is in my posts, show the menu, if not, don't
     private val isMyPostsAdapter: Boolean = false
 ) : ListAdapter<Post, PostAdapter.PostViewHolder>(PostDiffCallback()) {
 
@@ -42,19 +43,37 @@ class PostAdapter(
             onDeleteClick: (Post) -> Unit
         ) = binding.apply {
             tvUsername.text = post.postedBy
-            tvItemDate.text = post.date
+            tvItemDate.text = formatTimestamp(post.timestamp)
             tvItemTitle.text = post.title
             tvItemDescription.text = post.description
 
-            // Using a placeholder for now
-            ivItemImage.setImageResource(R.drawable.ic_placeholder)
-            ivPosterProfile.setImageResource(R.drawable.avatar)
-            chipItemStatus.text = if (post.isFound) "Found" else "Lost"
+            if (!post.location.isNullOrBlank()) {
+                tvItemLocation.text = post.location
+                tvItemLocation.visibility = View.VISIBLE
+                ivLocationIcon.visibility = View.VISIBLE
+            } else {
+                tvItemLocation.visibility = View.GONE
+                ivLocationIcon.visibility = View.GONE
+            }
 
-            // Get the current user ID
+            if (!post.imageUrl.isNullOrBlank()) {
+                ivItemImage.visibility = View.VISIBLE
+                ImageLoader.loadImage(ivItemImage, post.imageUrl)
+            } else {
+                ivItemImage.visibility = View.GONE
+            }
+
+            ivPosterProfile.setImageResource(R.drawable.avatar)
+            tvItemStatus.text = if (post.found) "Found" else "Lost"
+            val statusBackground = if (post.found) {
+                R.drawable.bg_found_status_pill
+            } else {
+                R.drawable.bg_lost_status_pill
+            }
+            tvItemStatus.setBackgroundResource(statusBackground)
+
             val currentUserId = AuthRepository.getCurrentUserId()
 
-            // Conditionally show the menu icon based on user ID and the adapter type
             if (isMyPostsAdapter && currentUserId == post.userId) {
                 ivPostMenu.visibility = View.VISIBLE
                 ivPostMenu.setOnClickListener {

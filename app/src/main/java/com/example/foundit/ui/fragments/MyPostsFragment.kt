@@ -29,8 +29,7 @@ class MyPostsFragment : Fragment() {
     private lateinit var postAdapter: PostAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMyPostsBinding.inflate(inflater, container, false)
         return binding.root
@@ -39,6 +38,20 @@ class MyPostsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.btnCreatePostHeader.setOnClickListener {
+            val action = MyPostsFragmentDirections.actionMyPostsToCreatePost()
+            findNavController().navigate(action)
+        }
+
+        binding.btnCreatePost.setOnClickListener {
+            val action = MyPostsFragmentDirections.actionMyPostsToCreatePost()
+            findNavController().navigate(action)
+        }
+
+        binding.ivBackArrow.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         setupRecyclerView()
         observeMyPosts()
     }
@@ -46,17 +59,14 @@ class MyPostsFragment : Fragment() {
     private fun setupRecyclerView() {
         postAdapter = PostAdapter(
             onItemClick = { post ->
-                val action =
-                    MyPostsFragmentDirections.actionMyPostsFragmentToItemDetailFragment(post.id)
-                findNavController().navigate(action)
-            },
-            onEditClick = { post ->
-                editPost(post)
-            },
-            onDeleteClick = { post ->
-                showDeleteConfirmationDialog(post)
-            },
-            isMyPostsAdapter = true
+            val action =
+                MyPostsFragmentDirections.actionMyPostsToItemDetail(post.id)
+            findNavController().navigate(action)
+        }, onEditClick = { post ->
+            editPost(post)
+        }, onDeleteClick = { post ->
+            showDeleteConfirmationDialog(post)
+        }, isMyPostsAdapter = true
         )
 
         binding.rvMyPosts.apply {
@@ -72,19 +82,19 @@ class MyPostsFragment : Fragment() {
                     postViewModel.myPosts.collect { posts ->
                         if (posts.isEmpty()) {
                             binding.rvMyPosts.visibility = View.GONE
-                            binding.tvNoPosts.visibility = View.VISIBLE
+                            binding.btnCreatePostHeader.visibility = View.GONE
+                            binding.emptyStateView.visibility = View.VISIBLE
                         } else {
                             binding.rvMyPosts.visibility = View.VISIBLE
-                            binding.tvNoPosts.visibility = View.GONE
+                            binding.btnCreatePostHeader.visibility = View.VISIBLE
+                            binding.emptyStateView.visibility = View.GONE
                             postAdapter.submitList(posts)
                         }
                     }
                 } catch (e: Exception) {
                     if (e !is CancellationException) {
                         Toast.makeText(
-                            context,
-                            "Failed to load posts: ${e.message}",
-                            Toast.LENGTH_LONG
+                            context, "Failed to load posts: ${e.message}", Toast.LENGTH_LONG
                         ).show()
                     }
                 }
@@ -93,22 +103,19 @@ class MyPostsFragment : Fragment() {
     }
 
     private fun showDeleteConfirmationDialog(post: Post) {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Delete Post")
+        AlertDialog.Builder(requireContext()).setTitle("Delete Post")
             .setMessage("Are you sure you want to delete this post?")
             .setPositiveButton("Delete") { dialog, _ ->
                 postViewModel.deletePost(post.id)
                 Toast.makeText(context, "Post deleted successfully.", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
-            }
-            .show()
+            }.show()
     }
 
     private fun editPost(post: Post) {
-        val action = MyPostsFragmentDirections.actionMyPostsFragmentToReportFragment(post.id)
+        val action = MyPostsFragmentDirections.actionMyPostsToCreatePost(post.id)
         findNavController().navigate(action)
     }
 
